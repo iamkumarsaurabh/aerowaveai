@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}AI Forecast | AeroWave AI{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper" id="weather-dashboard"
+    data-local-hour="{{ forecast_data.local_hour if forecast_data and not forecast_data.error else '' }}">
+
+    {% if not forecast_data %}
+    <div class="card empty-state animated-card">
+        <i class="fa-solid fa-microchip status-icon icon-ai"></i>
+        <h2>AI Prediction Engine Ready</h2>
+        <p>Enter a city above to predict tomorrow's weather using our Custom ML Model.</p>
+    </div>
+
+    {% elif forecast_data.error %}
+    <div class="card error-state animated-card">
+        <i class="fa-solid fa-triangle-exclamation status-icon error-icon"></i>
+        <h2 class="error-text">Prediction Error</h2>
+        <p class="error-subtext">{{ forecast_data.error }}</p>
+    </div>
+
+    {% else %}
+    <div class="card model-status-banner animated-card">
+        <h3><i class="fa-solid fa-brain icon-brain"></i> {{ forecast_data.model_status }}</h3>
+    </div>
+
+    <div class="dashboard-grid">
+
+        <div class="card comparison-section animated-card">
+            <div class="comparison-header">
+                <span class="section-label">Tomorrow's Forecast</span>
+                <h2 class="city-name">{{ forecast_data.city }}</h2>
+            </div>
+
+            <div class="comparison-body">
+                <div class="temp-block">
+                    <span class="temp-label">Today</span>
+                    <h2 class="temp-value current-temp">{{ forecast_data.current_temp }}°C</h2>
+                </div>
+
+                <div class="comparison-divider">
+                    <i class="fa-solid fa-arrow-right-long"></i>
+                </div>
+
+                <div class="temp-block">
+                    <span class="temp-label">Tomorrow</span>
+                    <h2 class="temp-value predicted-temp">{{ forecast_data.predicted_temp }}°C</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="card stat-card animated-card">
+                <i class="fa-solid fa-droplet stat-icon icon-humidity"></i>
+                <div class="stat-info">
+                    <span class="stat-title">Predicted Humidity</span>
+                    <span class="stat-value">{{ forecast_data.predicted_humidity }}%</span>
+                </div>
+            </div>
+
+            <div class="card stat-card animated-card">
+                <i class="fa-solid fa-wind stat-icon icon-wind"></i>
+                <div class="stat-info">
+                    <span class="stat-title">Predicted Wind</span>
+                    <span class="stat-value">{{ forecast_data.predicted_wind }} km/h</span>
+                </div>
+            </div>
+
+            <div class="card stat-card animated-card">
+                <i class="fa-solid fa-gauge-high stat-icon icon-pressure"></i>
+                <div class="stat-info">
+                    <span class="stat-title">Predicted Pressure</span>
+                    <span class="stat-value">{{ forecast_data.predicted_pressure }} hPa</span>
+                </div>
+            </div>
+
+            <div class="card stat-card animated-card">
+                <i class="fa-solid fa-cloud-sun stat-icon icon-condition"></i>
+                <div class="stat-info">
+                    <span class="stat-title">Expected Condition</span>
+                    <span class="stat-value">{{ forecast_data.predicted_condition }}</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

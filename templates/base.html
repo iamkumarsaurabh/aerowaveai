@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AeroWave AI{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='media.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-player/2.0.4/lottie-player.js"></script>
+</head>
+
+<body>
+
+    <div id="weather-bg" class="dynamic-bg">
+        <div id="weather-effects"></div>
+    </div>
+
+    <div class="nav-wrapper">
+        <nav class="capsule-nav">
+            <a href="/" class="nav-brand">AeroWave AI</a>
+
+            <div class="nav-links">
+                <a href="/" class="nav-item {% if request.endpoint == 'live' %}active{% endif %}">Live</a>
+                <a href="/forecast"
+                    class="nav-item {% if request.endpoint == 'forecast' %}active{% endif %}">Forecast</a>
+                <a href="/about" class="nav-item {% if request.endpoint == 'about' %}active{% endif %}">About</a>
+            </div>
+
+            <div class="nav-actions">
+                <form action="{{ request.path }}" method="POST" class="nav-search-form">
+                    <input type="text" name="city" placeholder="Search city..." required autocomplete="off"
+                        class="nav-search-input">
+                    <button type="submit" class="nav-search-btn">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+        </nav>
+    </div>
+
+    <main class="main-container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

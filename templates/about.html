@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}About | AeroWave AI{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper about-wrapper">
+    <div class="card about-section animated-card">
+
+        <h1 class="about-title">About AeroWave AI</h1>
+        <p class="about-intro">
+            AeroWave AI is an experimental Procedural Weather Audio Engine. It maps real-time atmospheric coordinates
+            directly into generative acoustic environments so that you don't just view weather patterns—you hear them
+            synthesized live.
+        </p>
+
+        <div class="about-content">
+            <h3>System Architecture & Audio Synthesis</h3>
+            <p>
+                The pipeline fetches raw data nodes directly through global meteorological nodes. Once validated,
+                parameters are routed into a custom-built mathematical processing layout utilizing low-latency NumPy
+                array grids to synthesize waveforms from scratch:
+            </p>
+            <ul>
+                <li><strong>Wind Vector Profiling:</strong> Wind speeds dynamically modify continuous white-noise
+                    filtering configurations, creating authentic localized pressure shifts.</li>
+                <li><strong>Acoustic Masking Layers:</strong> Specific condition states trigger targeted environmental
+                    micro-samples (such as rain frequencies or twilight cricket oscillations).</li>
+                <li><strong>Gain Saturation Controls:</strong> Real-time amplitudes are capped using strict bounding
+                    calculations to prevent hardware clipping while maintaining maximum spatial dynamic range.</li>
+            </ul>
+
+            <h3>Machine Learning Forecast Engine</h3>
+            <p>
+                The multi-variable system replaces basic historical lookups with a localized Random Forest Regressor
+                trained across global data checkpoints. By evaluating cross-dependencies between current temperature
+                matrices, pressure levels, and humidity gradients, the model builds deep decision trees to accurately
+                map localized weather trajectories 24 hours in advance.
+            </p>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

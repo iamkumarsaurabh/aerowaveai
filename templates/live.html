@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}Live Weather | AeroWave AI{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper" id="weather-dashboard"
+    data-local-hour="{{ weather_data.local_hour if weather_data and not weather_data.error else '' }}">
+
+    {% if not weather_data %}
+    <div class="card empty-state animated-card">
+        <i class="fa-solid fa-earth-americas status-icon"></i>
+        <h2>Ready to Scan</h2>
+        <p>Enter a city in the navbar above to generate live audio and weather data.</p>
+    </div>
+
+    {% elif weather_data.error %}
+    <div class="card error-state animated-card">
+        <i class="fa-solid fa-triangle-exclamation status-icon error-icon"></i>
+        <h2 class="error-text">Error</h2>
+        <p class="error-subtext">{{ weather_data.error }}</p>
+    </div>
+
+    {% else %}
+    <div class="dashboard-grid">
+
+        <div class="card hero-section animated-card">
+            <div class="hero-content">
+                <h1 class="city-name">{{ weather_data.city }}, {{ weather_data.country }}</h1>
+                <p class="weather-desc">{{ weather_data.description }}</p>
+                <div class="temp-display">
+                    <h2 class="main-temp">{{ weather_data.temp }}°</h2>
+                    <lottie-player id="weather-icon" src="https://assets3.lottiefiles.com/packages/lf20_stqmohua.json"
+                        background="transparent" speed="1" class="hero-icon" loop autoplay></lottie-player>
+                </div>
+            </div>
+            <div class="hero-footer">
+                <span><i class="fa-solid fa-temperature-half feel-icon"></i> Feels like: {{ weather_data.feels_like
+                    }}°C</span>
+                <span><i class="fa-solid fa-arrow-down min-icon"></i> Min: {{ weather_data.temp_min }}°C</span>
+                <span><i class="fa-solid fa-arrow-up max-icon"></i> Max: {{ weather_data.temp_max }}°C</span>
+            </div>
+        </div>
+
+        <div class="card audio-section animated-card">
+            <div class="audio-header">
+                <span class="section-label"><i class="fa-solid fa-headphones audio-wave-icon"></i> Procedural Audio
+                    Layer</span>
+                <h3 class="track-name">{{ weather_data.active_layer }}</h3>
+            </div>
+            {% if audio_file %}
+            <div class="audio-controls">
+                <audio controls autoplay loop class="weather-audio-player">
+                    <source src="{{ url_for('static', filename=audio_file) }}" type="audio/wav">
+                </audio>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="stats-grid">
+            <div class="card stat-card animated-card">
+                <i class="fa-solid fa-droplet stat-icon icon-humidity"></i>
+                <div class="stat-info">
+                    <span class="stat-title">Humidity</span>
+                    <span class="stat-value">{{ weather_data.humidity }}%</span>
+                </div>
+            </div>
+
+            <div class="card stat-card animated-card">
+                <i class="fa-solid fa-wind stat-icon icon-wind"></i>
+                <div class="stat-info">
+                    <span class="stat-title">Wind Speed</span>
+                    <span class="stat-value">{{ weather_data.wind_speed }} km/h</span>
+                </div>
+            </div>
+
+            <div class="card stat-card animated-card">
+                <i class="fa-solid fa-gauge-high stat-icon icon-pressure"></i>
+                <div class="stat-info">
+                    <span class="stat-title">Pressure</span>
+                    <span class="stat-value">{{ weather_data.pressure }} hPa</span>
+                </div>
+            </div>
+
+            <div class="card stat-card animated-card">
+                <i class="fa-solid fa-eye stat-icon icon-visibility"></i>
+                <div class="stat-info">
+                    <span class="stat-title">Visibility</span>
+                    <span class="stat-value">{{ weather_data.visibility_km }} km</span>
+                </div>
+            </div>
+
+            <div class="card stat-card animated-card">
+                <i class="fa-regular fa-sun stat-icon icon-sunrise"></i>
+                <div class="stat-info">
+                    <span class="stat-title">Sunrise</span>
+                    <span class="stat-value">{{ weather_data.sunrise }}</span>
+                </div>
+            </div>
+
+            <div class="card stat-card animated-card">
+                <i class="fa-regular fa-moon stat-icon icon-sunset"></i>
+                <div class="stat-info">
+                    <span class="stat-title">Sunset</span>
+                    <span class="stat-value">{{ weather_data.sunset }}</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
