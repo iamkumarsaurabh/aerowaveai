@@ -39,9 +39,7 @@ def generate_weather_audio(condition_desc, temp, wind_speed_kmh, output_filename
 
         wind_volume = min(0.1 + (wind_speed_kmh / 100), 0.3)
         final_audio = final_audio * wind_volume
-
     except FileNotFoundError:
-        print(f"❌ Error: Background wind file '{wind_path}' nahi mili!")
         return None, "Error"
 
     matched_file = None
@@ -53,7 +51,6 @@ def generate_weather_audio(condition_desc, temp, wind_speed_kmh, output_filename
     if matched_file:
         # CONDITION BASED AUDIO
         condition_path = os.path.join(ASSETS_DIR, matched_file)
-
         try:
             _, condition_audio = wavfile.read(condition_path)
             condition_audio = force_mono(condition_audio)
@@ -63,11 +60,8 @@ def generate_weather_audio(condition_desc, temp, wind_speed_kmh, output_filename
             final_audio = final_audio[:min_length] + (
                 condition_audio[:min_length] * 1.5
             )
-
         except FileNotFoundError:
-            print(f"⚠️ Condition file missing: {condition_path}")
             matched_file = f"Missing: {matched_file}"
-            
     else:
         matched_file = "Default Wind Only"
 

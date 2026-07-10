@@ -4,38 +4,57 @@
 
 {% block content %}
 <div class="dashboard-wrapper about-wrapper">
-    <div class="card about-section animated-card">
+    <div class="dashboard-grid">
 
-        <h1 class="about-title">About AeroWave AI</h1>
-        <p class="about-intro">
-            AeroWave AI is an experimental Procedural Weather Audio Engine. It maps real-time atmospheric coordinates
-            directly into generative acoustic environments so that you don't just view weather patterns—you hear them
-            synthesized live.
-        </p>
-
-        <div class="about-content">
-            <h3>System Architecture & Audio Synthesis</h3>
-            <p>
-                The pipeline fetches raw data nodes directly through global meteorological nodes. Once validated,
-                parameters are routed into a custom-built mathematical processing layout utilizing low-latency NumPy
-                array grids to synthesize waveforms from scratch:
+        <div class="card about-section animated-card">
+            <h1 class="about-title">About AeroWave AI</h1>
+            <p class="about-intro">
+                AeroWave AI is a Data-Driven Weather Predictor and Ambient Sound Synthesizer. It bridges the gap between
+                machine learning and generative audio engineering by transforming real-time climate metrics into an
+                immersive, mathematically synthesized acoustic experience.
             </p>
-            <ul>
-                <li><strong>Wind Vector Profiling:</strong> Wind speeds dynamically modify continuous white-noise
-                    filtering configurations, creating authentic localized pressure shifts.</li>
-                <li><strong>Acoustic Masking Layers:</strong> Specific condition states trigger targeted environmental
-                    micro-samples (such as rain frequencies or twilight cricket oscillations).</li>
-                <li><strong>Gain Saturation Controls:</strong> Real-time amplitudes are capped using strict bounding
-                    calculations to prevent hardware clipping while maintaining maximum spatial dynamic range.</li>
-            </ul>
+        </div>
 
-            <h3>Machine Learning Forecast Engine</h3>
-            <p>
-                The multi-variable system replaces basic historical lookups with a localized Random Forest Regressor
-                trained across global data checkpoints. By evaluating cross-dependencies between current temperature
-                matrices, pressure levels, and humidity gradients, the model builds deep decision trees to accurately
-                map localized weather trajectories 24 hours in advance.
-            </p>
+        <div class="card about-section animated-card">
+            <div class="about-content">
+                <h3>System Pipeline & Utility</h3>
+                <ul>
+                    <li><strong>Live Data Ingestion:</strong> The Flask backend connects with global meteorological APIs
+                        to fetch real-time climate parameters instantly.</li>
+                    <li><strong>Predictive Intelligence:</strong> A custom Scikit-Learn Regression model processes this
+                        data to forecast future weather trends accurately.</li>
+                    <li><strong>Procedural Audio:</strong> NumPy and SciPy engines translate these predictions into wave
+                        equations, generating loopless ambient sounds.</li>
+                    <li><strong>Automation & Zero-Storage:</strong> Fully automated web pipeline generating audio purely
+                        via mathematical synthesis without heavy audio files.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card about-section animated-card">
+            <div class="about-content">
+                <h3>Project Team (Group ALPHA)</h3>
+                <p>Developed as a 3rd Semester project at SIET, Nilokheri (Guided by Ms. Diksha).</p>
+
+                <div class="team-grid">
+                    <div class="team-member">
+                        <span class="team-role">Backend & API</span>
+                        <span class="team-name">Kumar Saurabh</span>
+                    </div>
+                    <div class="team-member">
+                        <span class="team-role">Machine Learning</span>
+                        <span class="team-name">Jayita</span>
+                    </div>
+                    <div class="team-member">
+                        <span class="team-role">Audio Synthesis</span>
+                        <span class="team-name">Khushbu</span>
+                    </div>
+                    <div class="team-member">
+                        <span class="team-role">Frontend UI</span>
+                        <span class="team-name">Simran</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>

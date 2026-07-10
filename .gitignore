@@ -1,3 +1,25 @@
-weather_model.pkl
+# Python caches
 __pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual Environment
+venv/
+.venv/
+env/
+ENV/
+
+# Environment Variables
+.env
+
+# Large Datasets & ML Models (Avoids GitHub 100MB Limit & Render OOM Error)
+GlobalWeatherRepository.csv
+weather_model.pkl
+
+# Dynamic App Generated Files (Clears out local audio clutter)
 static/weather_*.wav
+
+# IDE Settings
+.vscode/
+.idea/

@@ -1,15 +1,15 @@
-# api_key = "db44f9d150a209f3d8be517633f4c8e2"
-
+import os
 from flask import Flask, render_template, request
 import requests
 import time
-import os
 import glob
 from datetime import datetime
 from audio_engine import generate_weather_audio
 from forecast_engine import get_tomorrow_forecast
 
 app = Flask(__name__)
+
+API_KEY = os.environ.get("OPENWEATHER_API_KEY")
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -19,9 +19,7 @@ def live():
 
     if request.method == "POST":
         city = request.form.get("city")
-
-        api_key = "db44f9d150a209f3d8be517633f4c8e2"
-        weather_url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
+        weather_url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
 
         try:
             # API CALL for Current Weather Data
@@ -50,7 +48,7 @@ def live():
                 lon = data["coord"]["lon"]
 
                 # API CALL for AQI Data
-                aqi_url = f"http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={api_key}"
+                aqi_url = f"http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={API_KEY}"
                 aqi_response = requests.get(aqi_url).json()
 
                 aqi_value = aqi_response["list"][0]["main"]["aqi"]
@@ -65,6 +63,7 @@ def live():
                 aqi_text = aqi_mapping.get(aqi_value, "Unknown")
 
                 from datetime import timezone, timedelta
+
                 utc_now = datetime.now(timezone.utc)
                 city_time = utc_now + timedelta(seconds=data["timezone"])
                 local_hour = city_time.hour
@@ -80,10 +79,10 @@ def live():
                     "country": data["sys"].get("country", ""),
                     "condition": condition,
                     "description": description,
-                    "temp": temp,
-                    "feels_like": feels_like,
-                    "temp_min": temp_min,
-                    "temp_max": temp_max,
+                    "temp": round(temp, 1),
+                    "feels_like": round(feels_like, 1),
+                    "temp_min": round(temp_min, 1),
+                    "temp_max": round(temp_max, 1),
                     "humidity": humidity,
                     "pressure": pressure,
                     "visibility_km": visibility,
@@ -97,30 +96,19 @@ def live():
                     .title(),
                 }
 
-                print("\n" + "=" * 50)
-                print(
-                    f"🔥 FETCHED DATA FOR: {weather_data['city']}, {weather_data['country']}"
-                )
-                print("=" * 50)
-                for key, value in weather_data.items():
-                    print(f"{key.upper():<15}: {value}")
-                print("=" * 50 + "\n")
-
                 # CACHE CLEANUP
                 search_pattern = os.path.join("static", "weather_*.wav")
                 for old_file in glob.glob(search_pattern):
                     if os.path.basename(old_file) != unique_name:
                         try:
                             os.remove(old_file)
-                        except Exception as e:
-                            print(f"Delete Error: {e}")
+                        except Exception:
+                            pass
             else:
                 weather_data = {"error": "City not found! Please check the spelling."}
-                print(f"\n❌ ERROR: {weather_data['error']}\n")
 
         except Exception as e:
             weather_data = {"error": f"API Error: {e}"}
-            print(f"\n❌ EXCEPTION CAUGHT: {e}\n")
 
     return render_template(
         "live.html", weather_data=weather_data, audio_file=audio_file
@@ -133,16 +121,9 @@ def forecast():
 
     if request.method == "POST":
         city = request.form.get("city")
-        api_key = "db44f9d150a209f3d8be517633f4c8e2"
 
         # FORECAST ENGINE CALL
-        forecast_data = get_tomorrow_forecast(city, api_key)
-
-        print("\n" + "=" * 50)
-        print("🧠 AI ML PREDICTION FOR TOMORROW")
-        print("=" * 50)
-        print(forecast_data)
-        print("=" * 50 + "\n")
+        forecast_data = get_tomorrow_forecast(city, API_KEY)
 
     return render_template("forecast.html", forecast_data=forecast_data)
 

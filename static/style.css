@@ -1,3 +1,4 @@
+/* COMMON FOR base.html */
 body {
     margin: 0;
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -7,7 +8,29 @@ body {
     overflow-x: hidden;
 }
 
-/* NAVBAR STRUCTURE */
+.main-container {
+    padding-top: 120px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.dashboard-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 90%;
+    max-width: 800px;
+    margin-bottom: 40px;
+}
+
+.dashboard-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
 .nav-wrapper {
     position: fixed;
     top: 24px;
@@ -104,7 +127,46 @@ body {
     color: #000000;
 }
 
-/* DYNAMIC ENGINE SKIES */
+.card {
+    background: rgba(10, 12, 18, 0.45);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 24px;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.animated-card {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.animated-card:hover {
+    transform: translateY(-6px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+.empty-state,
+.error-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.status-icon {
+    font-size: 3.5rem;
+    color: rgba(255, 255, 255, 0.2);
+    margin-bottom: 20px;
+}
+
+.error-icon {
+    color: #f43f5e;
+}
+
+.icon-ai {
+    color: #3b82f6;
+}
+
 .dynamic-bg {
     position: fixed;
     top: 0;
@@ -187,11 +249,32 @@ body {
 
 .bg-cloud {
     position: absolute;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.01) 100%);
-    box-shadow: inset 0 10px 30px rgba(255, 255, 255, 0.06), 0 20px 40px rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 100px;
-    filter: blur(4px);
+    filter: blur(8px);
     animation: drift linear infinite;
+}
+
+.bg-cloud::before,
+.bg-cloud::after {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+}
+
+.bg-cloud::before {
+    width: 60%;
+    height: 150%;
+    top: -60%;
+    left: 15%;
+}
+
+.bg-cloud::after {
+    width: 45%;
+    height: 120%;
+    top: -40%;
+    right: 15%;
 }
 
 @keyframes drift {
@@ -204,71 +287,7 @@ body {
     }
 }
 
-/* WIDGET ARCHITECTURE */
-.main-container {
-    padding-top: 120px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.dashboard-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 90%;
-    max-width: 800px;
-    margin-bottom: 40px;
-}
-
-.dashboard-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-}
-
-.card {
-    background: rgba(10, 12, 18, 0.45);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 24px;
-    padding: 30px;
-    box-sizing: border-box;
-}
-
-.animated-card {
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.animated-card:hover {
-    transform: translateY(-6px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-}
-
-.empty-state,
-.error-state {
-    text-align: center;
-    padding: 60px 20px;
-}
-
-.status-icon {
-    font-size: 3.5rem;
-    color: rgba(255, 255, 255, 0.2);
-    margin-bottom: 20px;
-}
-
-.error-icon {
-    color: #f43f5e;
-}
-
-.icon-ai {
-    color: #3b82f6;
-}
-
-/* HERO DESIGN */
+/* FOR LIVE PAGE */
 .hero-section {
     display: flex;
     flex-direction: column;
@@ -302,8 +321,8 @@ body {
 }
 
 .hero-icon {
-    width: 130px;
-    height: 130px;
+    width: 140px;
+    height: 140px;
 }
 
 .hero-footer {
@@ -328,7 +347,6 @@ body {
     color: #f87171;
 }
 
-/* AUDIO INTERFACE */
 .audio-section {
     display: flex;
     flex-direction: column;
@@ -366,7 +384,6 @@ body {
     outline: none;
 }
 
-/* STATS GRID */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -435,7 +452,7 @@ body {
     color: #ffffff;
 }
 
-/* FORECAST CONFIG */
+/* FOR FORECAST PAGE */
 .model-status-banner {
     padding: 16px 25px;
     border-color: rgba(255, 255, 255, 0.08);
@@ -486,7 +503,15 @@ body {
     color: rgba(255, 255, 255, 0.15);
 }
 
-/* ABOUT COMPONENT */
+.forecast-stats {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* FOR ABOUT PAGE */
+.about-wrapper {
+    max-width: 900px;
+}
+
 .about-title {
     font-size: 2.2rem;
     margin-top: 0;
@@ -496,6 +521,7 @@ body {
     font-size: 1.1rem;
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 20px;
 }
 
 .about-content h3 {
@@ -513,4 +539,32 @@ body {
     padding-left: 20px;
     line-height: 1.8;
     color: rgba(255, 255, 255, 0.7);
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.team-member {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.team-role {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.team-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
 }

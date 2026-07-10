@@ -2,6 +2,7 @@ import os
 import pickle
 import pandas as pd
 import requests
+from datetime import datetime, timezone, timedelta
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, "weather_model.pkl")
@@ -15,11 +16,8 @@ def get_trained_model():
         try:
             with open(MODEL_PATH, "rb") as file:
                 _ml_model = pickle.load(file)
-            print("✅ Multi-Variable ML Model Loaded Successfully!")
-
         except FileNotFoundError:
-            print(f"❌ Error: Model file missing at {MODEL_PATH}")
-
+            pass
     return _ml_model
 
 
@@ -32,13 +30,10 @@ def get_tomorrow_forecast(city_name, api_key):
         data = response.json()
 
         if response.status_code == 200:
-
             current_temp = data["main"]["temp"]
             current_humidity = data["main"]["humidity"]
             current_wind = data["wind"]["speed"] * 3.6
             current_pressure = data["main"]["pressure"]
-
-            from datetime import datetime, timezone, timedelta
 
             utc_now = datetime.now(timezone.utc)
             city_time = utc_now + timedelta(seconds=data["timezone"])
@@ -76,19 +71,18 @@ def get_tomorrow_forecast(city_name, api_key):
 
             return {
                 "city": data["name"],
-                "model_status": "AeroWave AI Multi-Model Active 🟢",
-                "current_temp": current_temp,
-                "predicted_temp": round(predicted_temp, 2),
-                "predicted_humidity": round(predicted_humidity, 2),
+                "model_status": "AeroWave AI Active 🟢",
+                "current_temp": round(current_temp, 1),
+                "predicted_temp": round(predicted_temp, 1),
+                "predicted_humidity": round(predicted_humidity, 1),
                 "predicted_wind": round(predicted_wind, 2),
                 "predicted_pressure": int(predicted_pressure),
                 "predicted_condition": predicted_condition,
                 "confidence": "88%",
                 "local_hour": local_hour,
             }
-
         else:
             return {"error": "City not found or API error."}
 
     except Exception as e:
-        return {"error": f"Prediction Error: {str(e)}"}
+        return {"error": "Prediction Error: Service Unavailable."}
